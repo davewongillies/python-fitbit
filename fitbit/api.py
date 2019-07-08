@@ -876,6 +876,18 @@ class Fitbit(object):
         """
         return self._get_body('weight', base_date, user_id, period, end_date)
 
+    def log_bodyweight(self, weight, date, time=None):
+        """
+        https://dev.fitbit.com/build/reference/web-api/body/
+        """
+        data = {
+            'weight': weight,
+            'date': date.strftime("%Y-%m-%d"),
+            'time': time.strftime("%H:%M:%s")
+        }
+        url = "{0}/{1}/user/-/body/log/weight.json".format(*self._get_common_args())
+        return self.make_request(url, data=data, method="POST")
+
     def get_bodyfat(self, base_date=None, user_id=None, period=None, end_date=None):
         """
         https://dev.fitbit.com/docs/body/#get-body-fat-logs
@@ -886,6 +898,18 @@ class Fitbit(object):
         You can specify period or end_date, or neither, but not both.
         """
         return self._get_body('fat', base_date, user_id, period, end_date)
+
+    def log_bodyfat(self, fat, date, time=None):
+        """
+        https://dev.fitbit.com/build/reference/web-api/body/
+        """
+        data = {
+            'fat': fat,
+            'date': date.strftime("%Y-%m-%d"),
+            'time': time.strftime("%H:%M:%s")
+        }
+        url = "{0}/{1}/user/-/body/log/fat.json".format(*self._get_common_args())
+        return self.make_request(url, data=data, method="POST")
 
     def _get_body(self, type_, base_date=None, user_id=None, period=None,
                   end_date=None):
